@@ -94,33 +94,27 @@ const setupRoutes = app => {
     }
   }); // 5. إعداد طرق مختلفة | setup the different routes (get, post, put, delete)
 
-  app.get('/students', async (req, res) => {
-    try {
-      const token = req.headers.authorization;
-
-      if (!token) {
-        res.statusCode = 401;
-        res.send('You have no permissions!');
-        return;
-      }
-
-      const decodedToken = _jsonwebtoken.default.decode(token);
-
-      const teacher = await _Teacher.default.findById(decodedToken.sub);
-
-      if (!teacher) {
-        res.statusCode = 401;
-        res.send('You have no permissions!');
-        return;
-      }
-
-      _jsonwebtoken.default.verify(token, teacher.salt);
-    } catch (error) {
-      res.statusCode = 401;
-      res.send(error.message);
-      return;
-    }
-
+  app.get('/students', checkToken(), async (req, res) => {
+    // try {
+    //     const token = req.headers.authorization;
+    //     if(!token){
+    //         res.statusCode = 401;
+    //         res.send('You have no permissions!');
+    //         return;
+    //     }
+    //     const decodedToken = jwt.decode(token);
+    //     const teacher =  await TeacherModel.findById(decodedToken.sub);
+    //     if(!teacher){
+    //         res.statusCode = 401;
+    //         res.send('You have no permissions!');
+    //         return;
+    //     }
+    //     jwt.verify(token, teacher.salt);
+    // } catch (error) {
+    //     res.statusCode = 401;
+    //     res.send(error.message)
+    //     return
+    // }
     if (req.query.id) {
       const student = await _Student.default.findById(req.query.id);
 
@@ -133,33 +127,27 @@ const setupRoutes = app => {
       res.send(students);
     }
   });
-  app.post('/students/register', async (req, res) => {
-    try {
-      const token = req.headers.authorization;
-
-      if (!token) {
-        res.statusCode = 401;
-        res.send('You have no permissions!');
-        return;
-      }
-
-      const decodedToken = _jsonwebtoken.default.decode(token);
-
-      const teacher = await _Teacher.default.findById(decodedToken.sub);
-
-      if (!teacher) {
-        res.statusCode = 401;
-        res.send('You have no permissions!');
-        return;
-      }
-
-      _jsonwebtoken.default.verify(token, teacher.salt);
-    } catch (error) {
-      res.statusCode = 401;
-      res.send(error.message);
-      return;
-    }
-
+  app.post('/students/register', checkToken(), async (req, res) => {
+    // try {
+    //     const token = req.headers.authorization;
+    //     if(!token){
+    //         res.statusCode = 401;
+    //         res.send('You have no permissions!');
+    //         return;
+    //     }
+    //     const decodedToken = jwt.decode(token);
+    //     const teacher =  await TeacherModel.findById(decodedToken.sub);
+    //     if(!teacher){
+    //         res.statusCode = 401;
+    //         res.send('You have no permissions!');
+    //         return;
+    //     }
+    //     jwt.verify(token, teacher.salt);
+    // } catch (error) {
+    //     res.statusCode = 401;
+    //     res.send(error.message)
+    //     return
+    // }
     const {
       name,
       birthdate,
@@ -195,33 +183,27 @@ const setupRoutes = app => {
       return;
     }
   });
-  app.put('/students/:id', async (req, res) => {
-    try {
-      const token = req.headers.authorization;
-
-      if (!token) {
-        res.statusCode = 401;
-        res.send('You have no permissions!');
-        return;
-      }
-
-      const decodedToken = _jsonwebtoken.default.decode(token);
-
-      const teacher = await _Teacher.default.findById(decodedToken.sub);
-
-      if (!teacher) {
-        res.statusCode = 401;
-        res.send('You have no permissions!');
-        return;
-      }
-
-      _jsonwebtoken.default.verify(token, teacher.salt);
-    } catch (error) {
-      res.statusCode = 401;
-      res.send(error.message);
-      return;
-    }
-
+  app.put('/students/:id', checkToken(), async (req, res) => {
+    // try {
+    //     const token = req.headers.authorization;
+    //     if(!token){
+    //         res.statusCode = 401;
+    //         res.send('You have no permissions!');
+    //         return;
+    //     }
+    //     const decodedToken = jwt.decode(token);
+    //     const teacher =  await TeacherModel.findById(decodedToken.sub);
+    //     if(!teacher){
+    //         res.statusCode = 401;
+    //         res.send('You have no permissions!');
+    //         return;
+    //     }
+    //     jwt.verify(token, teacher.salt);
+    // } catch (error) {
+    //     res.statusCode = 401;
+    //     res.send(error.message)
+    //     return
+    // }
     const {
       id
     } = req.params;
@@ -244,7 +226,45 @@ const setupRoutes = app => {
       res.send(student);
     }
   });
-  app.delete('/students/:id', async (req, res) => {
+  app.delete('/students/:id', checkToken(), async (req, res) => {
+    // try {
+    //     const token = req.headers.authorization;
+    //     if(!token){
+    //         res.statusCode = 401;
+    //         res.send('You have no permissions!');
+    //         return;
+    //     }
+    //     const decodedToken = jwt.decode(token);
+    //     const teacher =  await TeacherModel.findById(decodedToken.sub);
+    //     if(!teacher){
+    //         res.statusCode = 401;
+    //         res.send('You have no permissions!');
+    //         return;
+    //     }
+    //     jwt.verify(token, teacher.salt);
+    // } catch (error) {
+    //     res.statusCode = 401;
+    //     res.send(error.message)
+    //     return
+    // }
+    const {
+      id
+    } = req.params;
+    const student = await _Student.default.findById(id);
+
+    if (!student) {
+      res.statusCode = 404;
+      res.send('student with this ID does not exist!');
+    } else {
+      student.delete();
+      res.send("student with ID = ".concat(id, " is deleted!"));
+    }
+  });
+  app.get('*', (req, res) => res.send('URL not found!'));
+};
+
+const checkToken = () => {
+  return async (req, res, next) => {
     try {
       const token = req.headers.authorization;
 
@@ -271,20 +291,8 @@ const setupRoutes = app => {
       return;
     }
 
-    const {
-      id
-    } = req.params;
-    const student = await _Student.default.findById(id);
-
-    if (!student) {
-      res.statusCode = 404;
-      res.send('student with this ID does not exist!');
-    } else {
-      student.delete();
-      res.send("student with ID = ".concat(id, " is deleted!"));
-    }
-  });
-  app.get('*', (req, res) => res.send('URL not found!'));
+    next();
+  };
 }; // 3. تصدير الوحدة | export the module
 
 
