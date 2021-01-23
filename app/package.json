@@ -4,8 +4,27 @@
   "description": "starter file for node course project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./lib/index.js",
+    "watch": "nodemon ./lib/index.js",
+    "build": "npx babel src --out-dir lib",
+    "build:watch": "npx babel src --watch --out-dir lib"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.13",
+    "nanoid": "^3.1.20"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "nodemon": "^2.0.7"
+  }
 }
