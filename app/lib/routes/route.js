@@ -95,26 +95,6 @@ const setupRoutes = app => {
   }); // 5. إعداد طرق مختلفة | setup the different routes (get, post, put, delete)
 
   app.get('/students', checkToken(), async (req, res) => {
-    // try {
-    //     const token = req.headers.authorization;
-    //     if(!token){
-    //         res.statusCode = 401;
-    //         res.send('You have no permissions!');
-    //         return;
-    //     }
-    //     const decodedToken = jwt.decode(token);
-    //     const teacher =  await TeacherModel.findById(decodedToken.sub);
-    //     if(!teacher){
-    //         res.statusCode = 401;
-    //         res.send('You have no permissions!');
-    //         return;
-    //     }
-    //     jwt.verify(token, teacher.salt);
-    // } catch (error) {
-    //     res.statusCode = 401;
-    //     res.send(error.message)
-    //     return
-    // }
     if (req.query.id) {
       const student = await _Student.default.findById(req.query.id);
 
@@ -128,26 +108,6 @@ const setupRoutes = app => {
     }
   });
   app.post('/students/register', checkToken(), async (req, res) => {
-    // try {
-    //     const token = req.headers.authorization;
-    //     if(!token){
-    //         res.statusCode = 401;
-    //         res.send('You have no permissions!');
-    //         return;
-    //     }
-    //     const decodedToken = jwt.decode(token);
-    //     const teacher =  await TeacherModel.findById(decodedToken.sub);
-    //     if(!teacher){
-    //         res.statusCode = 401;
-    //         res.send('You have no permissions!');
-    //         return;
-    //     }
-    //     jwt.verify(token, teacher.salt);
-    // } catch (error) {
-    //     res.statusCode = 401;
-    //     res.send(error.message)
-    //     return
-    // }
     const {
       name,
       birthdate,
@@ -184,26 +144,6 @@ const setupRoutes = app => {
     }
   });
   app.put('/students/:id', checkToken(), async (req, res) => {
-    // try {
-    //     const token = req.headers.authorization;
-    //     if(!token){
-    //         res.statusCode = 401;
-    //         res.send('You have no permissions!');
-    //         return;
-    //     }
-    //     const decodedToken = jwt.decode(token);
-    //     const teacher =  await TeacherModel.findById(decodedToken.sub);
-    //     if(!teacher){
-    //         res.statusCode = 401;
-    //         res.send('You have no permissions!');
-    //         return;
-    //     }
-    //     jwt.verify(token, teacher.salt);
-    // } catch (error) {
-    //     res.statusCode = 401;
-    //     res.send(error.message)
-    //     return
-    // }
     const {
       id
     } = req.params;
@@ -227,26 +167,6 @@ const setupRoutes = app => {
     }
   });
   app.delete('/students/:id', checkToken(), async (req, res) => {
-    // try {
-    //     const token = req.headers.authorization;
-    //     if(!token){
-    //         res.statusCode = 401;
-    //         res.send('You have no permissions!');
-    //         return;
-    //     }
-    //     const decodedToken = jwt.decode(token);
-    //     const teacher =  await TeacherModel.findById(decodedToken.sub);
-    //     if(!teacher){
-    //         res.statusCode = 401;
-    //         res.send('You have no permissions!');
-    //         return;
-    //     }
-    //     jwt.verify(token, teacher.salt);
-    // } catch (error) {
-    //     res.statusCode = 401;
-    //     res.send(error.message)
-    //     return
-    // }
     const {
       id
     } = req.params;
